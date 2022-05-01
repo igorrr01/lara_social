@@ -3,7 +3,7 @@
 
 @section('content')
 
-
+@foreach($posts as $post)
     <!-- Main content -->
     <section class="content">
     <div class="card-header">
@@ -14,31 +14,37 @@
             <div class="card card-widget">
               <div class="card-header">
                 <div class="user-block">
-                  <img class="img-circle" src="public/assets/img/user1-128x128.jpg" alt="User Image">
+                  @if($post->user->avatar)
+                  <img class="img-circle" src="/storage/app/{{$post->user->avatar}}" alt="User Image">
+                  @else
+                  <img class="img-circle" src="/public/assets/dist/img/user.png" alt="User Image">
+                  @endif
                   <span class="username"><a href="#"></a></span>
-                  <span class="description">5 часов назад</span>
+                  <!-- Randbages color -->
+                   @php 
+                     $inputbages = ['primary','secondary','success','danger','warning','info','light','dark'];
+                     $randbages = array_rand($inputbages, 2);
+                     $randbages =  $inputbages[$randbages[0]]; 
+                   @endphp
+                   <!-- /.Randbages color -->
+                  <span class="description"><h6><span class="badge badge-{{ $randbages }}"><a href="/user/{{$post->user->id}}" style="color: #ffffff">{{$post->user->name}}</a></span></h6></span>
                 </div>
                 <!-- /.user-block -->
                 <div class="card-tools">
-                  <button type="button" class="btn btn-tool" title="Mark as read">
-                    <i class="far fa-circle"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
+                  <span class="description" style="color: #343a40"><small>{{ Carbon\Carbon::parse($post->post_time)->diffForHumans() }}</small></span>
                 </div>
                 <!-- /.card-tools -->
-              </div>
+              </div><div class="card-header">
+                <h3 class="card-title">
+                 <i class="fas fa-edit"></i>
+                 {{ $post->title }}
+                </h3>
+          </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <img class="img-fluid pad" src="public/assets/dist/img/gau.jpg" alt="Photo">
-
-                <p>США новую игрушку подгнало))</p>
-<!--                 <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i> поделится</button>
- -->                <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> нравится</button>
+                <img class="img-fluid pad" src="/storage/app/{{ $post->photo }}" alt="Photo">
+                <p>{{ $post->description }}</p>
+                <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> нравится</button>
                 <span class="float-right text-muted">127 лайков - 3 комментариев</span>
               </div>
               <!-- /.card-body -->
@@ -88,6 +94,9 @@
             <!-- /.card -->
           </div>
           <!-- /.col -->
+        </div>
+      </section>
+@endforeach
 
 @endsection
 @endauth

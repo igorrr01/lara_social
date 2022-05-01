@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 
-use User;
+use App\User;
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+//use Illuminate\Database\Eloquent\Model;
 
 class HomeController extends Controller
 {
@@ -17,7 +19,9 @@ class HomeController extends Controller
          $user->last_move = time();
          $user->save();
      	}
-    	return view('index');
+
+     	$posts = Post::query()->with('user')->orderBy('post_time', 'desc')->limit(10)->get();
+    	return view('index', ['posts' => $posts]);
 
     }
 }

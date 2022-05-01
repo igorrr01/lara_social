@@ -26,17 +26,23 @@ class PostController extends Controller
         ]);
 
     	if($request->hasFile('photo')){
-            $folder = date('Y-m-d');
-         $photo = $request->file('photo')->store("images/posts/{$folder}");
-        }
+        	$folder = date('Y-m-d');
+        	$photo = $request->file('photo')->store("images/posts/{$folder}");
+        }else{
+        	session()->flash('error', 'Ошибка при загрузке фото');
+			return back();        
+		}
+
         $post = Post::create([
+            'user_id' => Auth::user()->id,
             'title' => $request->title,
             'description' => $request->description,
             'photo' => $photo,
+            'post_time' => time(),
         ]);
 
-        session()->flash('success', 'Successfull posts');
-        return redirect()->home();
+        	session()->flash('success', 'Публикация добавлена');
+			return back();        
     }
     
 }

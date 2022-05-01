@@ -190,17 +190,6 @@
             </a>
           </li> 
 
-<!--           @foreach($users_online as $uuser)
-         <li class="nav-item">
-           <a href="{{ route('home') }}" class="nav-link">
-             <i class="nav-icon fas fa-door-open"></i>
-              <p>{{$uuser->id}}</p>
-            </a>
-          </li>
-            @endforeach -->
-
-
-
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -211,7 +200,6 @@
         <div class="card-body">
            @foreach($users_online as $uuser)
            <p class="card-text">
-
 
           @if($uuser->avatar)
           <img src="/storage/app/{{ $uuser->avatar }}"  alt="User Image" class="rounded-circle" height="20" width="20">
