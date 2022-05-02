@@ -21,9 +21,11 @@ Route::post('/login', 'UserController@login')->name('login');
 });
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('post/create', 'PostController@create')->name('post.create');
 Route::post('post/create', 'PostController@store')->name('post.store');
 
+Route::get('post/like/{id}', 'PostController@like')->name('post.like');
 Route::get('user/{id}', 'UserController@show')->name('show_user');
 Route::get('profile/avatar', 'UserController@avatar')->name('avatar');
 Route::post('profile/avatar', 'UserController@avatarUpload')->name('avatar');

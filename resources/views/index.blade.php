@@ -44,10 +44,10 @@
               <div class="card-body">
                 <img class="img-fluid pad" src="/storage/app/{{ $post->photo }}" alt="Photo">
                 <p>{{ $post->description }}</p>
-                <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> нравится</button>
-                <span class="float-right text-muted">127 лайков - 3 комментариев</span>
+                <a href="/post/like/{{ $post->id }}"><button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> нравится ({{ count($post->likes) }})</button></a>
+                <span class="float-right text-muted">{{ count($post->likes) }} лайков - 3 комментариев</span>
               </div>
-              <!-- /.card-body -->
+            <!-- /.card-body -->
               <div class="card-footer card-comments">
                 <div class="card-comment">
                   <!-- User image -->

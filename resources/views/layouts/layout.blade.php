@@ -184,7 +184,7 @@
             </a>
           </li>         
            <li class="nav-item">
-         <a href="{{ route('home') }}" class="nav-link">
+         <a href="{{ route('logout') }}" class="nav-link">
              <i class="nav-icon fas fa-door-open"></i>
               <p>Выход</p>
             </a>

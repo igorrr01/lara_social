@@ -20,7 +20,7 @@ class HomeController extends Controller
          $user->save();
      	}
 
-     	$posts = Post::query()->with('user')->orderBy('post_time', 'desc')->limit(10)->get();
+     	$posts = Post::query()->with('user','likes')->orderBy('post_time', 'desc')->limit(10)->get();
     	return view('index', ['posts' => $posts]);
 
     }

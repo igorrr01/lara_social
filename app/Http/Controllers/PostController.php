@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use App\User;
 use App\Post;
-
+use App\Like;
 class PostController extends Controller
 {
 
@@ -43,6 +43,31 @@ class PostController extends Controller
 
         	session()->flash('success', 'Публикация добавлена');
 			return back();        
+    }
+
+    public function like ($id)
+    {
+    		// Поиск лайка 
+    	 	$find_like = Like::where([
+    	 		['user_id', '=', Auth::user()->id],
+    			['post_id', '=', $id]
+    		])->first();
+
+    	 	// Удаление лайка
+    		if($find_like){
+				$find_like->delete();
+				return back();  
+			} 
+
+			// Добавление лайка
+    	    $like = Like::create([
+            'user_id' => Auth::user()->id,
+            'post_id' => $id,
+            'like_time' => time(),
+        ]);
+
+			return back();     
+
     }
     
 }
