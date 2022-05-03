@@ -67,16 +67,7 @@
             </div>
           </div>
         </div>
-<!--         <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-              <label for="agreeTerms">
-               Я согласен с <a href="#">правилами</a>
-              </label>
-            </div>
-          </div> -->
-          <!-- /.col -->
+
           <hr>
           <div class="col-15" >
             <button type="submit" class="btn btn-block btn-primary">Регистрация</button>
@@ -84,17 +75,6 @@
           <!-- /.col -->
         </div>
       </form>
-
-<!--       <div class="social-auth-links text-center">
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i>
-          Sign up using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i>
-          Sign up using Google+
-        </a>
-      </div> -->
       <div class="card-footer">
           <i class="fas fa-users mr-2 center"></i>
           <a href="login.html" class="text-center"> Я уже зарегистрирован</a>

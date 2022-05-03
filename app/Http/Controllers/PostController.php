@@ -9,6 +9,7 @@ use Intervention\Image\Facades\Image;
 use App\User;
 use App\Post;
 use App\Like;
+use App\Comment;
 class PostController extends Controller
 {
 
@@ -69,5 +70,27 @@ class PostController extends Controller
 			return back();     
 
     }
-    
+
+    public function comment (Request $request)
+    {
+    	$request->validate([
+           'comment' => 'required|min:2|max:250|',
+        ]);
+    	
+    	$comment = Comment::create([
+            'user_id' => Auth::user()->id,
+            'post_id' => $request->id,
+            'comment' => $request->comment,
+            'comment_time' => time(),
+        ]);
+
+       	return back();     
+
+    }
+
+    public function view ($id)
+    {
+        $posts = Post::query()->with('user','likes','comments_post')->find($id);
+        return view('post.view', ['posts' => $posts]);
+    }
 }

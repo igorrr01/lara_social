@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use App\User;
-
+use App\Post;
 class UserController extends Controller
 {
     /**
@@ -124,9 +124,11 @@ class UserController extends Controller
 
     public function show ($id){
 
+        $posts = Post::query()->with('user','likes','comments')->where('user_id', '=', $id)->orderBy('id', 'desc')->get();
         $user = User::find($id);
         return view('profile.page', [
-            "user" => $user
+            "user" => $user,
+            "posts" => $posts
         ]);
     }
 

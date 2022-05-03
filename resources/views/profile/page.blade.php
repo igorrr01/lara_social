@@ -47,6 +47,24 @@
                 <!-- /.row -->
               </div>
             </div>
+
+
+<div class="card-group">
+<div class="card-columns">
+
+@foreach($posts as $post)
+  <div class="card">
+    <a href="/post/view/{{ $post->id }}"><img class="card-img-top" src="/storage/app/{{ $post->photo }}" alt="Card image cap"></a>
+    <div class="card-body">
+      <h5 class="card-title">{{ $post->title }}</h5>
+      <p class="card-text">{{ $post->description }}</p>
+      <p class="card-text"><small class="text-muted">{{ Carbon\Carbon::parse($post->post_time)->diffForHumans() }}</small></p>
+    </div>
+  </div>
+@endforeach
+
+</div>
+</div>
 </div>
 @endsection
 

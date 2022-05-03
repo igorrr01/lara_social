@@ -3,19 +3,17 @@
 
 @section('content')
 
-@foreach($posts as $post)
     <!-- Main content -->
     <section class="content">
     <div class="card-header">
-
         <div class="row justify-content-center" >
           <div class="col-md-10">
             <!-- Box Comment -->
             <div class="card card-widget">
               <div class="card-header">
                 <div class="user-block">
-                  @if($post->user->avatar)
-                  <img class="img-circle" src="/storage/app/{{$post->user->avatar}}" alt="User Image">
+                  @if($posts->user->avatar)
+                  <img class="img-circle" src="/storage/app/{{$posts->user->avatar}}" alt="User Image">
                   @else
                   <img class="img-circle" src="/public/assets/dist/img/user.png" alt="User Image">
                   @endif
@@ -27,50 +25,43 @@
                      $randbages =  $inputbages[$randbages[0]]; 
                    @endphp
                    <!-- /.Randbages color -->
-                  <span class="description"><h6><span class="badge badge-{{ $randbages }}"><a href="/user/{{$post->user->id}}" style="color: #ffffff">{{$post->user->name}}</a></span></h6></span>
+                  <span class="description"><h6><span class="badge badge-{{ $randbages }}"><a href="/user/{{$posts->user->id}}" style="color: #ffffff">{{$posts->user->name}}</a></span></h6></span>
                 </div>
                 <!-- /.user-block -->
                 <div class="card-tools">
-                  <span class="description" style="color: #343a40"><small>{{ Carbon\Carbon::parse($post->post_time)->diffForHumans() }}</small></span>
+                  <span class="description" style="color: #343a40"><small>{{ Carbon\Carbon::parse($posts->post_time)->diffForHumans() }}</small></span>
                 </div>
                 <!-- /.card-tools -->
               </div><div class="card-header">
                 <h3 class="card-title">
                  <i class="fas fa-edit"></i>
-                 {{ $post->title }}
+                 {{ $posts->title }}
                 </h3>
           </div>
 
-
               <!-- /.card-header -->
               <div class="card-body">
-                <img class="img-fluid pad" src="/storage/app/{{ $post->photo }}" alt="Photo">
-                <p>{{ $post->description }}</p>
-                <a href="/post/like/{{ $post->id }}">
+                <img class="img-fluid pad" src="/storage/app/{{ $posts->photo }}" alt="Photo">
+                <p>{{ $posts->description }}</p>
+                <a href="/post/like/{{ $posts->id }}">
 
-                    @if($post->likes_count >= 1)
-
-                  @foreach($post->likes as $like)
+                     @if($posts->likes_count >= 1)
+                  @foreach($posts->likes as $like)
                     @if(Auth::user()->id == $like->user_id)
-                      <button type="button" class="btn btn-default btn-sm"><i class="fas fa-heart"> {{ count($post->likes) }}</i></button></a>
+                      <button type="button" class="btn btn-default btn-sm"><i class="fas fa-heart"> {{ count($posts->likes) }}</i></button></a>
                     @endif
                   @endforeach
                     @if(Auth::user()->id != $like->user_id)
-                      <button type="button" class="btn btn-default btn-sm"><i class="far fa-heart"> {{ count($post->likes) }}</i></button></a>
+                      <button type="button" class="btn btn-default btn-sm"><i class="far fa-heart"> {{ count($posts->likes) }}</i></button></a>
                     @endif
-                    @else
-                      <button type="button" class="btn btn-default btn-sm"><i class="far fa-heart"> {{ count($post->likes) }}</i></button></a>
                     @endif
-
-
-                <span class="float-right text-muted"><i class="fas fa-heart"> {{ count($post->likes) }}</i> <i class="fas fa-comments"> {{ count($post->comments )}}</i></span>
+                <span class="float-right text-muted"><i class="fas fa-heart"> {{ count($posts->likes) }}</i> <i class="fas fa-comments"> {{ count($posts->comments_post )}}</i></span>
               </div>
 
-
-            <div class="card-footer card-comments">
-            @if(count($post->comments) >= 1)
+               <div class="card-footer card-comments">
+            @if(count($posts->comments_post) >= 1)
             @php $c = 1; @endphp
-            @foreach($post->comments as $comment)
+            @foreach($posts->comments_post as $comment)
 
             <!-- /.card-body -->
                 <div class="card-comment">
@@ -90,18 +81,12 @@
                   <!-- /.comment-text -->
                 </div>
 
-                
-                <!-- /.card-comment -->
-               <?php if($c >= 5){ ?>    
-                  <a href="/post/view/{{ $post->id }}"><button type="button" class="btn btn-default btn-block"><i class="fa fa-comments"></i> Перейти к обсуждению</button></a>
-                </form>
-              <?php break;} ++$c; ?>
               @endforeach
               @endif
             </div>
               <!-- /.card-footer -->
               <div class="card-footer">
-                <form action="/post/comment/{{ $post->id }}" method="post">
+                <form action="/post/comment/{{ $posts->id }}" method="post">
                   @csrf
                   @if(Auth::user()->avatar)
                   <img class="img-fluid img-circle img-sm" src="/storage/app/{{Auth::user()->avatar}}" alt="Alt Text">
@@ -125,10 +110,10 @@
             <!-- /.card -->
           </div>
           <!-- /.col -->
+
+
         </div>
       </section>
-@endforeach
-                    {{ $posts->onEachSide(10)->links('') }}
 
 @endsection
 @endauth

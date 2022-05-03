@@ -24,6 +24,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('post/create', 'PostController@create')->name('post.create');
 Route::post('post/create', 'PostController@store')->name('post.store');
+Route::post('post/comment/{id}', 'PostController@comment')->name('post.comment');
+Route::get('post/view/{id}', 'PostController@view')->name('post.view');
 
 Route::get('post/like/{id}', 'PostController@like')->name('post.like');
 Route::get('user/{id}', 'UserController@show')->name('show_user');
