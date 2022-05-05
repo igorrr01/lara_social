@@ -31,3 +31,8 @@ Route::get('post/like/{id}', 'PostController@like')->name('post.like');
 Route::get('user/{id}', 'UserController@show')->name('show_user');
 Route::get('profile/avatar', 'UserController@avatar')->name('avatar');
 Route::post('profile/avatar', 'UserController@avatarUpload')->name('avatar');
+
+Route::get('user/follow/{profileId}', 'UserController@followUser')->name('user.follow');
+Route::get('user/unfollow/{profileId}', 'UserController@unfollowUser')->name('user.unfollow');
+Route::get('user/followings/{profileId}', 'UserController@followings')->name('user.followings');
+Route::get('user/followers/{profileId}', 'UserController@followers')->name('user.followers');

@@ -172,7 +172,7 @@
             </a>
           </li>         
            <li class="nav-item">
-         <a href="{{ route('home') }}" class="nav-link">
+         <a href="{{ route('user.followings', Auth::user()->id) }}" class="nav-link">
              <i class="nav-icon fas fa-user-friends"></i>
               <p>Подписки</p>
             </a>

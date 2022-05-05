@@ -51,7 +51,6 @@ class UserController extends Controller
         $avatar = $request->file('avatar')->store("images/{$folder}");
          }
 
-        //dd($request->all());
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -125,11 +124,60 @@ class UserController extends Controller
     public function show ($id){
 
         $posts = Post::query()->with('user','likes','comments')->where('user_id', '=', $id)->orderBy('id', 'desc')->get();
+        $post_count = count($posts);
         $user = User::find($id);
+
+         $followers = User::query()->with('followers','followings')->where('id', '=', $id)->withCount('followers')->get();
+         $followings = User::query()->with('followers','followings')->where('id', '=', $id)->withCount('followings')->get();
+         
+         foreach ($followers as $foll) {
+           // dd($foll->followers_count);
+         }
         return view('profile.page', [
             "user" => $user,
-            "posts" => $posts
+            "posts" => $posts,
+            "post_count" => $post_count,
+            "followers" => $followers,
+            "followings" => $followings,
         ]);
+    }
+
+    public function followUser(int $profileId)
+    {
+    $user = User::find($profileId);
+    if(!$user) {
+        return redirect()->back()->with('error', 'Ошибка!'); 
+    }
+
+    $user->followers()->attach(auth()->user()->id);
+     return redirect()->back()->with('success', 'Вы успешно подписались');
+    }
+
+    public function unFollowUser(int $profileId)
+    {
+    $user = User::find($profileId);
+    if(! $user) {
+        return redirect()->back()->with('error', 'Ошибка'); 
+    }
+
+    $user->followers()->detach(auth()->user()->id);
+        return redirect()->back()->with('success', 'Вы успешно отписались!');
+    }
+
+    public function followings(int $userId)
+    {
+    $user = User::find($userId);
+    $followers = $user->followers;
+    $followings = $user->followings;
+        return view('profile.followings', compact('user', 'followers' , 'followings'));
+    }
+
+    public function followers(int $userId)
+    {
+    $user = User::find($userId);
+    $followers = $user->followers;
+    $followings = $user->followings;
+        return view('profile.followers', compact('user', 'followers' , 'followings'));
     }
 
 }
