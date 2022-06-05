@@ -13,7 +13,12 @@
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "*",
+        "munafio/chatify": "^1.4",
+        "nahid/talk": "^2.4",
+        "rtconner/laravel-tagging": "*",
+        "spatie/laravel-image-optimizer": "^1.6"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

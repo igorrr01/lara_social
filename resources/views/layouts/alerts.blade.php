@@ -1,3 +1,8 @@
+    <section class="content">
+
+        <div class="row justify-content-center" >
+          <div class="col-md-10">
+
 	@if(session('success'))
 		        <div class="alert alert-success">
 		        	{{ session('success') }}
@@ -17,4 +22,4 @@
                 @endforeach
         </div>
     @endif
-
+</div></div></section>

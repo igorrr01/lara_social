@@ -3,21 +3,24 @@
 
 @section('content')
 @include('layouts.alerts')
-<div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Сделать публикацию</h3>
+     <section class="content">
+       <div class="card-header">
+        <div class="row justify-content-center" >
+          <div class="col-md-10">
+            <!-- Box Comment -->
+            <div class="card card-widget">
+              <div class="card-header" >
+
+                <h3 class="card-title"><b>Сделать публикацию</b></h3>
               </div>
               <form method="post" action="{{ route('post.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
-                  <div class="form-group">
+  <!--                 <div class="form-group">
                     <label for="exampleInputEmail1">Заголовок</label>
                     <input type="text" class="form-control" id="title" placeholder="Введите заголовок..." name="title">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Комментарий</label>
-                    <textarea class="form-control" rows="3" id="description" placeholder="Введите текст..." name="description"></textarea>
-                  </div>
+                  </div> -->
+
                   <div class="form-group">
                     <label for="exampleInputFile">Выберите фото</label>
                     <div class="input-group">
@@ -27,6 +30,21 @@
                       </div>
                     </div>
                   </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1" >Комментарий</label>
+                    <p class="lead emoji-picker-container">
+                    <textarea class="form-control" rows="3" id="description" placeholder="Введите текст..." name="description" data-emojiable="true" data-emoji-input="unicode"></textarea></p>
+                  </div>
+
+                    <div class="form-group">
+                            <label>Теги: <span class="text-danger"></span><small>(разделитель - #)</small></label>
+                            <br>
+                            <input type="text" data-role="tagsinput" name="tags" class="form-control tags">
+                            <br>
+                            @if ($errors->has('tags'))
+                                <span class="text-danger">{{ $errors->first('tags') }}</span>
+                            @endif
+                    </div>
                 </div>
                 <!-- /.card-body -->
 
@@ -34,8 +52,13 @@
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
               </form>
+                          </div>
+             </div>
             </div>
-
+          </div>
+        </div>
+      </div>
+    </section>
 @endsection
 
 @endauth

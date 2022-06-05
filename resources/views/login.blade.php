@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tvinky</title>
-        @include('layouts.alerts')
+  <title>SnapSwanky</title>
+    @include('layouts.alerts')
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -14,12 +14,19 @@
   <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('public/assets/css/style.css') }}">
+    <style>
+    body {background: #f7f7f7;background-image: url("public/assets/dist/img/login.jpg");font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;background-attachment: fixed;background-repeat: no-repeat;background-size: cover;position:relative;}
+  </style>
 </head>
-<body class="hold-transition register-page">
-<div class="register-box">
+
+   <div class="row justify-content-center" >
+          <div class="col-md-3">
+
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="../../index2.html" class="h1"><b>Tvinky</a>
+      <img src="/public/assets/dist/img/logo.jpg" class="brand-image img-circle elevation-3" width="55" 
+      style="opacity: .8">
+      <a href="/" class="h1"><b>SnapSwanky</a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Введите данные для входа</p>
@@ -62,14 +69,42 @@
         <a href="{{ route('user.create') }}" class="text-center"> Регистрация</a>
       </p>
       <i class="fas fa-users "></i>
-        <a href="forgot-password.html">Восстановить пароль</a>
+        <a href="{{ route('password.request') }}">Восстановить пароль</a>
       </p>
     </div>
+
+
+<!-- /.login-box -->
+
+<div class="card-body">
+      <p class="login-box-msg"><i class="fas fa-star" style="color:#7e5aa1"></i> Популярное сегодня</p>
+
+@foreach($posts as $p)
+<div class="card card-widget">
+  <img class="img-fluid pad rounded" src="/storage/app/{{ $p->photo }}" alt="Dist Photo 1">
+
+    <span class="post-tags mb-1">
+        <span class="badge badge-light"><i class="fas fa-user"></i> {{ $p->description }}</span>
+      @foreach($p->tags as $tag)
+        <span class="badge badge-info"> #
+            {{$tag->name}}
+          </span>
+      @endforeach
+     <span class="float-right text-muted"><i class="fas fa-heart" style="color:red"> {{ count($p->likes) }}</i> 
+        <i class="fas fa-comments" style="color:blue"> {{ count($p->comments )}}</i></span>
+    </span>
+</div>
+@endforeach
+
+</div>
+
+
   </div></div>
     <!-- /.login-card-body -->
   </div>
 </div>
-<!-- /.login-box -->
+</b>
+</a></div>
 
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
@@ -77,6 +112,5 @@
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
-</body>
 </html>
 

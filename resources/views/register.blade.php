@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tvinky</title>
+  <title>SnapSwanky</title>
         @include('layouts.alerts')
 
   <!-- Google Font: Source Sans Pro -->
@@ -19,7 +19,9 @@
 <div class="register-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="../../index2.html" class="h1"><b>Tvinky</a>
+      <img src="/public/assets/dist/img/logo.jpg" class="brand-image img-circle elevation-3" width="55" 
+      style="opacity: .8">
+      <a href="/" class="h1"><b>SnapSwanky</a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Регистрация пользователя</p>

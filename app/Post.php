@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
- 
-    protected $fillable = ['title','description','photo','user_id','post_time'];
+     use \Conner\Tagging\Taggable;
+     
+    protected $fillable = ['title','description','photo','user_id','post_time','tags'];
  
 	public function user()
     {

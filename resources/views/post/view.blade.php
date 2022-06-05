@@ -25,39 +25,60 @@
                      $randbages =  $inputbages[$randbages[0]]; 
                    @endphp
                    <!-- /.Randbages color -->
-                  <span class="description"><h6><span class="badge badge-{{ $randbages }}"><a href="/user/{{$posts->user->id}}" style="color: #ffffff">{{$posts->user->name}}</a></span></h6></span>
+                  <span class="description"><h6><span class="badge badge-{{ $randbages }}"><a href="/user/{{$posts->user->id}}" style="color: #ffffff">{{$posts->user->name}}</a></span>
+                    @if($posts->user->verify == '1')
+                      <i class="bi bi-patch-check-fill" style="color: blue"></i></h6></span>
+                    @endif
+                  </h6></span>
                 </div>
                 <!-- /.user-block -->
                 <div class="card-tools">
-                  <span class="description" style="color: #343a40"><small>{{ Carbon\Carbon::parse($posts->post_time)->diffForHumans() }}</small></span>
+                  <span class="description" style="color: #343a40">
+                    @if(Auth::user()->user_status == 5 || Auth::user()->id == $posts->user_id) 
+                    <a href="/post/delete/{{$posts->id}}" ><i class="fas fa-trash-alt"></i></a> 
+                    @endif
+                  <small>{{ Carbon\Carbon::parse($posts->created_at)->diffForHumans() }}</small></span>
                 </div>
                 <!-- /.card-tools -->
-              </div><div class="card-header">
-                <h3 class="card-title">
-                 <i class="fas fa-edit"></i>
-                 {{ $posts->title }}
-                </h3>
-          </div>
-
+              </div>
               <!-- /.card-header -->
-              <div class="card-body">
-                <img class="img-fluid pad" src="/storage/app/{{ $posts->photo }}" alt="Photo">
-                <p>{{ $posts->description }}</p>
+            <div class="card-body">
+                <a href="/post/view/{{ $posts->id }}"><img class="img-fluid pad rounded"  src="/storage/app/{{ $posts->photo }}" alt="Photo"></a><p></p>
+                  @if($posts->user->avatar)
+                  <img class="direct-chat-img" src="/storage/app/{{$posts->user->avatar}}" alt="User Image">
+                  @else
+                  <img class="direct-chat-img" src="/public/assets/dist/img/user.png" alt="User Image">
+                  @endif
+
+                  <div class="direct-chat-text" style="background-color: #ffffff;">
+                      
+                   {{ $posts->description }} </div><p></p>
                 <a href="/post/like/{{ $posts->id }}">
 
-                     @if($posts->likes_count >= 1)
+                    @if($posts->likes_count >= 1)
+
                   @foreach($posts->likes as $like)
                     @if(Auth::user()->id == $like->user_id)
-                      <button type="button" class="btn btn-default btn-sm"><i class="fas fa-heart"> {{ count($posts->likes) }}</i></button></a>
+                      <button type="button" class="btn btn-default btn-sm"><i class="fas fa-heart" style="color:red"> {{ count($posts->likes) }}</i></button></a>
+                      @break;
                     @endif
                   @endforeach
                     @if(Auth::user()->id != $like->user_id)
-                      <button type="button" class="btn btn-default btn-sm"><i class="far fa-heart"> {{ count($posts->likes) }}</i></button></a>
+                      <button type="button" class="btn btn-default btn-sm"><i class="far fa-heart" style="color:red"> {{ count($posts->likes) }}</i></button></a>
                     @endif
+                    @else
+                      <button type="button" class="btn btn-default btn-sm"><i class="far fa-heart" style="color:red"> {{ count($posts->likes) }}</i></button></a>
                     @endif
-                <span class="float-right text-muted"><i class="fas fa-heart"> {{ count($posts->likes) }}</i> <i class="fas fa-comments"> {{ count($posts->comments_post )}}</i></span>
-              </div>
 
+                <span class="float-right text-muted"><i class="fas fa-heart" style="color:red"> {{ count($posts->likes) }}</i> (<a href="/post/wholike/{{ $posts->id }}">?</a>) 
+                  <i class="fas fa-comments" style="color:blue"> {{ count($posts->comments )}}</i></span>
+
+                        <div class="post-tags mb-4">
+                            @foreach($posts->tags as $tag)
+                              <div class="badge badge-info"> #
+                                <a href="/tags/{{ $tag->name }}" style="color: #ffffff">{{$tag->name}}</a></div>
+                             @endforeach
+                        </div>
                <div class="card-footer card-comments">
             @if(count($posts->comments_post) >= 1)
             @php $c = 1; @endphp
@@ -74,7 +95,13 @@
                   <div class="comment-text">
                     <span class="username">
                       <a href="/user/{{ $comment->user->id }}">{{ $comment->user->name }}</a>
-                      <span class="text-muted float-right">{{ Carbon\Carbon::parse($comment->comment_time)->diffForHumans() }}</span>
+                      <span class="text-muted float-right">
+
+                    @if(Auth::user()->user_status == 5 || Auth::user()->id == $comment->user_id) 
+                    <a href="/post/deleteComment/{{$comment->id}}" ><i class="fas fa-trash-alt"></i></a> 
+                    @endif
+
+                        {{ Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</span>
                     </span><!-- /.username -->
                     {{ $comment->comment }}
                   </div>
@@ -95,7 +122,8 @@
                   @endif
                   <!-- .img-push is used to add margin to elements next to floating images -->
                   <div class="img-push">
-                    <input type="text" class="form-control form-control-sm" name="comment" placeholder="Нажмите enter для отправки комментария">
+                    <p class="lead emoji-picker-container">
+                    <input type="text" class="form-control form-control-sm" name="comment" placeholder="Введите комментарий..." data-emojiable="true" data-emoji-input="unicode"></p>
                       <span style="float:right;">
                         <div class="mt-2" >
                           <button type="submit" class="btn btn-block btn-primary">Отправить</button> 
